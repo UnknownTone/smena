@@ -21,13 +21,27 @@ Neural networks (SAM 2 + LaMa) cut any photo set into elements — locally, noth
 | | File | Neural networks | Requirements |
 |---|---|---|---|
 | **Windows** | `SMENA_Setup-x.y.z.exe` (~100 MB) | not included — point the ФОТО tab to a Python with them (`.venv-prep`, below) | Windows 10/11 x64, OpenGL 3.3 GPU |
-| **macOS** | `SMENA-x.y.z-mac-arm64.dmg` (~1.3 GB) | SAM 2 + LaMa inside (Metal) | macOS 13+, Apple Silicon (M1–M4), 8 GB RAM (16 recommended) |
+| **macOS** | `SMENA-x.y.z-mac-arm64.dmg` (~760 MB) | SAM 2 + LaMa inside (Metal) | macOS 13+, Apple Silicon (M1–M4), 8 GB RAM (16 recommended) |
 
 A demo set of three photos (CC0, Tbilisi architecture) is built in. / Демо-набор из трёх фото встроен.
 
-**macOS, first launch:** the app is not signed — right-click → *Open*; see `README — first launch.txt` in the
-disk image. System audio needs [BlackHole 2ch](https://existential.audio/blackhole/) (or pick an audio input).
-**macOS, первый запуск:** правый клик → «Открыть»; звук системы — через BlackHole 2ch (или выберите вход карты).
+**macOS, first launch** — the app is not signed with an Apple certificate, so macOS blocks it once:
+
+- **macOS 15 and later:** open SMENA, click *Done* in the warning, then *System Settings → Privacy & Security* →
+  *Open Anyway* next to SMENA → confirm with your password.
+- **macOS 13–14:** right-click SMENA in Applications → *Open* → *Open*.
+- **Any version (Terminal):** `xattr -dr com.apple.quarantine /Applications/SMENA.app`
+
+System audio needs [BlackHole 2ch](https://existential.audio/blackhole/) (or pick an audio input at the top of the window).
+
+**macOS, первый запуск** — приложение не подписано сертификатом Apple, macOS один раз его блокирует:
+
+- **macOS 15 и новее:** открыть SMENA, в предупреждении нажать «Готово», затем «Системные настройки →
+  Конфиденциальность и безопасность» → «Всё равно открыть» рядом со SMENA → подтвердить паролем.
+- **macOS 13–14:** правый клик по SMENA в «Программах» → «Открыть» → «Открыть».
+- **Любая версия (Терминал):** `xattr -dr com.apple.quarantine /Applications/SMENA.app`
+
+Звук системы — через BlackHole 2ch (или выберите вход звуковой карты вверху окна).
 
 **Windows:** SmartScreen may warn about an unknown publisher → *More info* → *Run anyway*. The installer
 assigns the discrete GPU (NVIDIA/AMD) to SMENA. / SmartScreen: «Подробнее» → «Выполнить в любом случае».
