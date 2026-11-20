@@ -9,8 +9,8 @@ Covers / Относится к:
 - `docs/design/`, `docs/manual/` images, `assets/poster/` — mock-ups, manual art, posters / макеты, картинки руководства, афиши
 - `data/demo_drawn/` — generated demo images / нарисованные демо-картинки
 
-You may share and adapt this artwork with attribution («SMENA») for **non-commercial** purposes.
-Можно распространять и переделывать с указанием «SMENA», **не в коммерческих целях**.
+You may share and adapt this artwork with attribution («SMENA by Unknown_Tone») for **non-commercial** purposes.
+Можно распространять и переделывать с указанием «SMENA, Unknown_Tone», **не в коммерческих целях**.
 
 Not covered (own licenses, see `CREDITS.md`): fonts (SIL OFL 1.1), demo photos in `data/demo_photos/` and
 `data/sample_cache/` (CC0 1.0), neural network models (Apache 2.0). Source code — MIT (`LICENSE`).

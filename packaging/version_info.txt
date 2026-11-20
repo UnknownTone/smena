@@ -8,7 +8,7 @@ VSVersionInfo(
       StringStruct('FileDescription', 'SMENA — photo VJ'),
       StringStruct('FileVersion', '0.1.2'),
       StringStruct('ProductVersion', '0.1.2'),
-      StringStruct('LegalCopyright', 'MIT (code), CC BY-NC 4.0 (art)'),
+      StringStruct('LegalCopyright', '(c) 2026 Unknown_Tone. MIT (code), CC BY-NC 4.0 (art)'),
       StringStruct('OriginalFilename', 'SMENA.exe')])]),
     VarFileInfo([VarStruct('Translation', [0x0419, 1200])])
   ]
