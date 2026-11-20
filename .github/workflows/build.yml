@@ -6,6 +6,12 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      target:
+        description: "что собирать"
+        type: choice
+        options: [all, windows, macos]
+        default: all
 
 permissions:
   contents: write
@@ -16,6 +22,7 @@ env:
 
 jobs:
   windows:
+    if: github.event_name != 'workflow_dispatch' || inputs.target != 'macos'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v5
@@ -50,7 +57,9 @@ jobs:
           files: build/out/*.exe
 
   macos:
-    runs-on: macos-15          # Apple Silicon (arm64)
+    if: github.event_name != 'workflow_dispatch' || inputs.target != 'windows'
+    runs-on: macos-latest      # Apple Silicon (arm64)
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
