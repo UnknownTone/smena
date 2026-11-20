@@ -8,7 +8,7 @@ import logging.handlers
 import os
 import sys
 
-from PySide6.QtCore import Qt, QTimer
+from PySide6.QtCore import QProcess, Qt, QTimer
 from PySide6.QtGui import QIcon, QSurfaceFormat
 from PySide6.QtWidgets import QApplication, QMessageBox
 
@@ -40,10 +40,39 @@ def excepthook(tp, val, tb):
         QMessageBox.critical(None, "SMENA — ошибка", f"{tp.__name__}: {val}\n\nПодробности — в журнале:\n{LOG_DIR}")
 
 
+def fit_screen(app, settings):
+    """Первый запуск: если окно (не меньше MIN_W×MIN_H) не помещается на экран — подобрать масштаб, запомнить
+    и перезапуститься с ним (QT_SCALE_FACTOR задаётся только до создания QApplication). True — ушли в перезапуск."""
+    from smena.ui.main_window import MIN_H, MIN_W
+    scr = app.primaryScreen()
+    if scr is None:
+        return False
+    av = scr.availableGeometry()
+    need = min(av.width() / MIN_W, (av.height() - 32) / MIN_H)   # 32 — заголовок окна
+    scale = 1.0 if need >= 1.0 else max(0.6, int(need * 100) / 100)
+    log.info("экран %d×%d, масштаб интерфейса: %.2f", av.width(), av.height(), scale)
+    if os.environ.get("SMENA_SMOKE"):                  # пробный запуск — ничего не запоминать
+        return False
+    settings["ui_scale"] = scale
+    settings.save()
+    if scale == 1.0:
+        return False
+    args = sys.argv[1:] if getattr(sys, "frozen", False) else ["-m", "smena", *sys.argv[1:]]
+    if QProcess.startDetached(sys.executable, args):
+        return True
+    return False
+
+
 def main():
     setup_logging()
     sys.excepthook = excepthook
     log.info("SMENA %s, Python %s", VERSION, sys.version.split()[0])
+
+    settings = Settings()
+    scale = settings["ui_scale"]
+    if scale and abs(float(scale) - 1.0) > 0.01 and "QT_SCALE_FACTOR" not in os.environ:
+        os.environ["QT_SCALE_FACTOR"] = f"{float(scale):.2f}"   # интерфейс мельче — для экранов меньше макета
+        log.info("масштаб интерфейса: %s", os.environ["QT_SCALE_FACTOR"])
 
     fmt = QSurfaceFormat()
     fmt.setVersion(3, 3)
@@ -57,6 +86,8 @@ def main():
     icon = ROOT / "packaging" / "icons" / "smena.png"
     if icon.is_file():
         app.setWindowIcon(QIcon(str(icon)))
+    if scale is None and fit_screen(app, settings):
+        return                                             # перезапуск с подобранным масштабом
 
     from smena.audio.capture import AudioEngine
     from smena.audio.triggers import Triggers
@@ -64,7 +95,6 @@ def main():
     from smena.ui.main_window import MainWindow
     from smena.ui.theme import THEME
 
-    settings = Settings()
     THEME.load(app, settings["theme"])
     params = Params()
     Params.install_factory()                               # заводские пресеты slow / medium / trance

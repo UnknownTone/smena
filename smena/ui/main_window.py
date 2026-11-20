@@ -36,6 +36,7 @@ from smena.ui.viewfinder import Viewfinder
 from smena.ui.widgets import BeatIndicator, FrameCounter, Knob, PlateButton, Scanlines
 
 BANK_H = 282
+MIN_W, MIN_H = 1560, 900          # минимум окна (макет 1920×1080); меньше экран — app.fit_screen уменьшает масштаб
 
 
 def engrave(text, role="engrave"):
@@ -97,7 +98,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.app, self.settings, self.engine, self.params = app, settings, engine, params
         self.setWindowTitle(f"SMENA {VERSION}")
-        self.setMinimumSize(1560, 900)
+        self.setMinimumSize(MIN_W, MIN_H)
         self._device_ids = []
         size = tuple(settings["render_size"])
         self.mod = Modulation(params)
