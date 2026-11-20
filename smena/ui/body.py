@@ -139,7 +139,7 @@ class TinBody(QWidget):
         proc = QProcess(self)
         proc.finished.connect(lambda code, _st, out=out, rj=rj: self._shell_done(code, out, rj))
         self._proc = proc
-        proc.start(*script_cmd(self.prep_python, SHELL_SCRIPT, ["shell", W, H, rj, out]))
+        proc.start(*script_cmd(self.prep_python, SHELL_SCRIPT, ["shell", W, H, rj, out], light=True))
 
     def _shell_done(self, code, out, rj):
         self._proc = None

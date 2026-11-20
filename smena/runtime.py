@@ -35,24 +35,36 @@ def default_prep_python():
     return str(venv / "Scripts" / "python.exe") if IS_WIN else str(venv / "bin" / "python")
 
 
+def external_python(python):
+    """Сборка без нейросетей (Windows), но на вкладке ФОТО указан свой python с ними (например .venv-prep)."""
+    if not (FROZEN and python and Path(python).is_file()):
+        return False
+    try:
+        return Path(python).resolve() != Path(sys.executable).resolve()
+    except OSError:
+        return False
+
+
 def prep_available(python):
     """Есть ли чем запускать тяжёлые скрипты (torch)."""
     if FROZEN:
-        return importlib.util.find_spec("torch") is not None
+        return importlib.util.find_spec("torch") is not None or external_python(python)
     return bool(python) and Path(python).is_file()
 
 
 def shell_available(python):
     """Корпус рисует numpy + OpenCV: в сборке они внутри, при разработке — в .venv-prep."""
     if FROZEN:
-        return importlib.util.find_spec("cv2") is not None
+        return importlib.util.find_spec("cv2") is not None or external_python(python)
     return bool(python) and Path(python).is_file()
 
 
-def script_cmd(python, script, args=()):
-    """(программа, аргументы) для QProcess / subprocess."""
+def script_cmd(python, script, args=(), light=False):
+    """(программа, аргументы) для QProcess / subprocess. Сборка: тем же приложением, если в нём есть нужное
+    (light — скрипту хватает numpy + OpenCV, как корпусу), иначе — внешним python (окружение с нейросетями)."""
     args = [str(a) for a in args]
-    if FROZEN:
+    inside = importlib.util.find_spec("cv2" if light else "torch") is not None
+    if FROZEN and (inside or not external_python(python)):
         return sys.executable, ["--run-script", str(script), *args]
     return str(python), ["-u", "-X", "utf8", str(script), *args]
 

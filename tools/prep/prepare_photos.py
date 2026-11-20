@@ -25,6 +25,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 MODELS = Path(os.environ.get("SMENA_MODELS") or ROOT / "models")    # в сборке — models внутри приложения
+if not MODELS.is_dir() and (Path(sys.prefix).parent / "models").is_dir():
+    MODELS = Path(sys.prefix).parent / "models"     # скрипты из сборки, python — свой .venv-prep: models рядом с ним
 SAM_CKPT = MODELS / "sam2" / "sam2.1_hiera_base_plus.pt"
 SAM_CFG = "configs/sam2.1/sam2.1_hiera_b+.yaml"
 LAMA_CKPT = MODELS / "torch" / "hub" / "checkpoints" / "big-lama.pt"

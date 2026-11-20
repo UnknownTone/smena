@@ -20,7 +20,7 @@ Neural networks (SAM 2 + LaMa) cut any photo set into elements — locally, noth
 
 | | File | Neural networks | Requirements |
 |---|---|---|---|
-| **Windows** | `SMENA_Setup-x.y.z.exe` (~150 MB) | not included — prepare photos from source (below) | Windows 10/11 x64, OpenGL 3.3 GPU |
+| **Windows** | `SMENA_Setup-x.y.z.exe` (~100 MB) | not included — point the ФОТО tab to a Python with them (`.venv-prep`, below) | Windows 10/11 x64, OpenGL 3.3 GPU |
 | **macOS** | `SMENA-x.y.z-mac-arm64.dmg` (~1.3 GB) | SAM 2 + LaMa inside (Metal) | macOS 13+, Apple Silicon (M1–M4), 8 GB RAM (16 recommended) |
 
 A demo set of three photos (CC0, Tbilisi architecture) is built in. / Демо-набор из трёх фото встроен.
