@@ -1,0 +1,5 @@
+# Сборка (packaging/smena.spec) — поверх requirements-smena.txt.
+# OpenCV для корпуса «жестянка» ставится отдельно: Windows — opencv-python-headless (лёгкая сборка),
+# macOS — opencv-python вместе с нейросетями (requirements-nn.txt); два пакета cv2 сразу ставить нельзя.
+pyinstaller>=6.11,<7
+Pillow==9.5.0

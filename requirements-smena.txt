@@ -1,0 +1,10 @@
+# Программа SMENA (smena/): окружение .venv-smena на Python 3.12 — оно же для сборки установщика.
+#   py -3.12 -m venv .venv-smena
+#   .venv-smena\Scripts\python.exe -m pip install -r requirements-smena.txt
+# Только PySide6-Essentials (без Addons/WebEngine) — установщик меньше.
+# Проверено 2026-10-16, Windows 11, RTX 3050 Laptop.
+PySide6-Essentials==6.12.0
+numpy==2.5.4
+SoundCard==0.4.6
+moderngl==5.13.0
+imageio-ffmpeg==0.6.0

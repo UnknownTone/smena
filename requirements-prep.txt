@@ -1,0 +1,12 @@
+# Подготовка фото: окружение .venv-prep на Python 3.12 (см. docs/SETUP.md §2).
+# Проверено 2026-10-10: RTX 3050 Laptop, драйвер 566.07.
+#
+# 1) PyTorch с CUDA — отдельной командой:
+#    .venv-prep\Scripts\python.exe -m pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+# 2) SAM 2 — из репозитория, без CUDA-расширения:
+#    set SAM2_BUILD_CUDA=0
+#    .venv-prep\Scripts\python.exe -m pip install "git+https://github.com/facebookresearch/sam2.git"
+# 3) Остальное — этим файлом:
+#    .venv-prep\Scripts\python.exe -m pip install -r requirements-prep.txt
+simple-lama-inpainting==0.1.2
+# iopaint   # опционально: веб-интерфейс LaMa для ручных правок

@@ -1,0 +1,80 @@
+{
+  "P": 0.2,
+  "S": 0,
+  "entry": 1,
+  "flicker_in": 50,
+  "news": 6,
+  "pwm": 70,
+  "strips": 200,
+  "spread": 0.6,
+  "fx": 200,
+  "ks_max": 8,
+  "T": 4,
+  "ov.hold": 8,
+  "ov.fade": 1.0,
+  "ov.size": 50,
+  "orig": 0,
+  "orig.flash": 50,
+  "strength": 100,
+  "gran": 32,
+  "bright": 110,
+  "tr.kind": 4,
+  "tr.dur": 2,
+  "tr.curve": 0,
+  "tr.quant": 0,
+  "tr.rand": 60,
+  "tr.order": 1,
+  "lfo1.wave": 3,
+  "lfo1.rate": 83.0,
+  "lfo1.depth": 30.0,
+  "lfo1.sync": true,
+  "lfo2.wave": 4,
+  "lfo2.rate": 75.0,
+  "lfo2.depth": 100.0,
+  "lfo2.sync": true,
+  "lfo3.wave": 2,
+  "lfo3.rate": 67.0,
+  "lfo3.depth": 70.0,
+  "lfo3.sync": true,
+  "lfo4.wave": 1,
+  "lfo4.rate": 60.0,
+  "lfo4.depth": 50.0,
+  "lfo4.sync": false,
+  "lfo.wires": [
+    [
+      1,
+      "bright"
+    ],
+    [
+      1,
+      "strength"
+    ],
+    [
+      2,
+      "tr.kind"
+    ],
+    [
+      3,
+      "gran"
+    ],
+    [
+      3,
+      "orig"
+    ],
+    [
+      4,
+      "tr.dur"
+    ],
+    [
+      2,
+      "tr.rand"
+    ],
+    [
+      4,
+      "T"
+    ]
+  ],
+  "ov.file": "",
+  "img.smooth": false,
+  "tr.on": true
+}

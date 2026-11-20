@@ -1,0 +1,133 @@
+/* Тема SMENA 0.1.2: корпус чёрный, акцент — жёлто-зелёный логотипа ut2, экран — зелёный «фоллаут».
+   @имя — цвет из palette.json, @font_* — шрифты, @dir — папка темы. Код от темы не зависит:
+   имена объектов (#Body, #PipScreen…) и свойство role — единственный договор с программой. */
+
+* { outline: none; }
+
+QMainWindow, #Body {
+    background-color: @body;
+    background-image: url(@dir/@tex_body);
+}
+QWidget { color: @engrave; font-family: "@font_engrave"; font-size: 13px; }
+QToolTip {
+    background: #0b0a05; color: #f3f1e4; border: 2px solid @accent;
+    font-family: "@font_engrave"; font-size: 17px; padding: 8px 11px;
+}
+
+/* ---------- корпус ---------- */
+QLabel[role="engrave"] { color: @engrave; font-family: "@font_engrave"; font-size: 12px;
+                         font-weight: bold; letter-spacing: 1px; background: transparent; }
+QLabel[role="engrave_red"] { color: @engrave_red; font-family: "@font_engrave"; font-size: 12px;
+                             font-weight: bold; letter-spacing: 1px; background: transparent; }
+QLabel[role="brand"] { color: @engrave; font-family: "@font_engrave"; font-size: 30px;
+                       font-weight: bold; letter-spacing: 6px; background: transparent; }
+QLabel[role="digits"] { color: @accent; font-family: "@font_digits"; font-size: 32px; background: transparent; }
+QLabel[role="brand_ver"] { color: @accent; font-family: "@font_digits"; font-size: 26px; background: transparent; }
+QLabel[role="engrave_dim"] { color: #8d8b6a; font-family: "@font_engrave"; font-size: 11px;
+                             font-weight: bold; letter-spacing: 1px; background: transparent; }
+QLabel[role="plate"] { color: @engrave; font-family: "@font_engrave"; font-size: 20px; font-weight: bold;
+                       letter-spacing: 3px; background: transparent; }
+
+#Body QPushButton {
+    color: @engrave; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #24220f, stop:1 #14130a);
+    border: 1px solid @metal_shadow; border-radius: 5px; padding: 5px 10px;
+    font-family: "@font_engrave"; font-weight: bold; letter-spacing: 1px;
+}
+#Body QPushButton:hover { border-color: @accent; }
+#Body QPushButton:pressed, #Body QPushButton:checked { background: @accent; color: #111; border-color: @accent; }
+#Body QPushButton:disabled { color: @metal_shadow; border-color: #333; }
+#Body QPushButton#Rec { color: @engrave; border-color: #6a2a1d; }
+#Body QPushButton#Rec:checked { background: @rec; color: #fff; border-color: @rec; }
+#Body QPushButton#Play { font-size: 18px; }
+
+#CutHandle { background: transparent; }
+#CutHandle QLabel { background: transparent; }
+#Bank { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #12110b, stop:1 #0a0905);
+        border: 1px solid #000; border-radius: 2px; }
+#Plate { border-right: 1px solid @olive; background: transparent; }
+
+#Body QComboBox {
+    color: @engrave; background: #000; border: 1px solid @metal_shadow; border-radius: 4px;
+    padding: 4px 8px; min-width: 220px;
+}
+#Body QComboBox QAbstractItemView {
+    background: #101010; color: @engrave; selection-background-color: @accent; selection-color: #111; border: 1px solid @metal_shadow;
+}
+
+#Viewfinder { background: @viewfinder; border: 1px solid #000; border-radius: 2px; }
+#FaderBank, #FaderBank > QWidget > QWidget { background: transparent; }
+
+/* ---------- экран Pip-Boy ---------- */
+#PipScreen { background: @screen_bg; border: 1px solid #000; border-radius: 2px; }
+#PipScreen QWidget { color: @screen_fg; font-family: "@font_screen"; font-size: 13px; background: transparent; }
+#PipScreen QLabel[role="dim"] { color: @screen_dim; }
+#PipScreen QLabel[role="warn"] { color: @screen_warn; }
+#PipScreen QLabel[role="big"] { font-family: "@font_digits"; font-size: 30px; }
+#PipScreen QLabel[role="title"] { color: @screen_fg; font-size: 14px; font-weight: bold; }
+
+QTabWidget#ScreenTabs::pane { border: none; border-top: 1px solid @screen_dim; top: -1px; }
+QTabWidget#ScreenTabs QTabBar::tab {
+    color: @screen_dim; background: transparent; padding: 5px 7px; margin-right: 1px;
+    border: 1px solid transparent; font-family: "@font_screen"; font-size: 13px; font-weight: bold;
+}
+QTabWidget#ScreenTabs QTabBar::tab:selected { color: @screen_fg; border: 1px solid @screen_dim; border-bottom-color: @screen_bg; }
+QTabWidget#ScreenTabs QTabBar::tab:hover { color: @screen_fg; }
+
+#PipScreen QPushButton {
+    color: @screen_fg; background: transparent; border: 1px solid @screen_dim; border-radius: 2px; padding: 4px 9px;
+}
+#PipScreen QPushButton:hover { border-color: @screen_fg; }
+#PipScreen QPushButton:pressed, #PipScreen QPushButton:checked { background: @screen_fg; color: @screen_bg; }
+#PipScreen QPushButton:disabled { color: #145a2c; border-color: #0f3d20; }
+
+#PipScreen QLineEdit, #PipScreen QSpinBox, #PipScreen QDoubleSpinBox, #PipScreen QComboBox {
+    color: @screen_fg; background: #020b05; border: 1px solid @screen_dim; padding: 3px 5px;
+    selection-background-color: @screen_fg; selection-color: @screen_bg;
+}
+#PipScreen QComboBox QAbstractItemView {
+    color: @screen_fg; background: @screen_bg; border: 1px solid @screen_dim;
+    selection-background-color: @screen_fg; selection-color: @screen_bg;
+}
+#PipScreen QTreeWidget, #PipScreen QListWidget, #PipScreen QPlainTextEdit {
+    color: @screen_fg; background: #020b05; border: 1px solid @screen_dim;
+    selection-background-color: @screen_fg; selection-color: @screen_bg; alternate-background-color: #061a0d;
+}
+#PipScreen QTreeWidget::item:selected, #PipScreen QListWidget::item:selected {
+    background: @screen_fg; color: @screen_bg;
+}
+#PipScreen QHeaderView::section {
+    color: @screen_dim; background: @screen_bg; border: none; border-bottom: 1px solid @screen_dim; padding: 3px;
+}
+#PipScreen QProgressBar {
+    color: @screen_fg; background: #020b05; border: 1px solid @screen_dim; text-align: center; min-height: 16px;
+}
+#PipScreen QProgressBar::chunk { background: @screen_dim; }
+#PipScreen QCheckBox::indicator { width: 12px; height: 12px; border: 1px solid @screen_dim; background: #020b05; }
+#PipScreen QCheckBox::indicator:checked { background: @screen_fg; }
+
+/* ---------- прокрутка ---------- */
+QScrollBar:horizontal { height: 10px; background: transparent; margin: 0; }
+QScrollBar:vertical { width: 10px; background: transparent; margin: 0; }
+QScrollBar::handle { background: @metal_shadow; border-radius: 4px; min-width: 30px; min-height: 30px; }
+#PipScreen QScrollBar::handle { background: @screen_dim; }
+QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page { background: none; border: none; width: 0; height: 0; }
+
+QInputDialog, QMessageBox, QFileDialog { background: @body; }
+QInputDialog QWidget, QMessageBox QWidget { color: @engrave; }
+QInputDialog QLineEdit, QInputDialog QDoubleSpinBox { background: #101010; border: 1px solid @metal_shadow; padding: 3px; }
+
+#PipScreen QPushButton[role="warn"] { color: @screen_warn; border-color: @screen_warn; }
+#PipScreen QPushButton[role="warn"]:checked { background: @screen_warn; color: @screen_bg; }
+#PipScreen QLabel[role="lfo"] { color: @accent; font-family: "@font_digits"; font-size: 18px; }
+#PipScreen QFrame[role="group"] { border: 1px solid #2f7a4a; background: #061a0e; border-radius: 3px; }
+#PipScreen QFrame[role="scope_lfo"] { border: none; border-left: 1px solid #1e8a4466; background: transparent; }
+#PipScreen QTableWidget { color: @screen_fg; background: #020b05; border: 1px solid @screen_dim; gridline-color: #0f3d20;
+                          selection-background-color: @screen_fg; selection-color: @screen_bg; }
+
+#TopBar { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #1d1c15, stop:1 #0c0b07);
+          border: 1px solid #000; border-radius: 2px; }
+#TopBar QLabel { background: transparent; }
+
+#OverlayPanel { background: transparent; }
+#OverlayPanel QPushButton { padding: 2px 4px; font-size: 11px; }
+#KnobGroup { background: rgba(0, 0, 0, 60); border: 1px solid #3e3c1c; border-radius: 4px; }

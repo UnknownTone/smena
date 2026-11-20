@@ -1,0 +1,94 @@
+# Сборка SMENA: Windows (установщик, без нейросетей) и macOS Apple Silicon (.dmg с SAM 2 и LaMa).
+# Метка v* → релиз с обоими файлами; кнопка «Run workflow» → только файлы сборки (Artifacts) для проверки.
+name: build
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Зависимости
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-smena.txt -r requirements-build.txt opencv-python-headless==4.11.0.86
+      - name: Иконки
+        run: python tools/build/make_icons.py
+      - name: PyInstaller
+        run: pyinstaller packaging/smena.spec --noconfirm --distpath build/dist --workpath build/work
+      - name: Самопроверка
+        shell: bash
+        run: ./build/dist/SMENA/SMENA.exe --selftest | cat; test "${PIPESTATUS[0]}" = 0
+      - name: Inno Setup
+        run: |
+          if (-not (Test-Path "C:\Program Files (x86)\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+          python tools/build/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SMENA-windows
+          path: build/out/*.exe
+      - name: Релиз
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/out/*.exe
+
+  macos:
+    runs-on: macos-14          # Apple Silicon (arm64)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Зависимости (программа + нейросети)
+        env:
+          SAM2_BUILD_CUDA: "0"
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install -r requirements-smena.txt -r requirements-build.txt
+          pip install opencv-python==4.11.0.86 -r requirements-nn.txt
+          pip install --no-deps simple-lama-inpainting==0.1.2
+          pip install --no-deps --no-build-isolation "git+https://github.com/facebookresearch/sam2.git@2b90b9f5ceec907a1c18123530e92e794ad901a4"
+      - name: Модели (кеш)
+        uses: actions/cache@v4
+        with:
+          path: models
+          key: models-${{ hashFiles('tools/build/fetch_models.py') }}
+      - name: Скачать модели
+        run: python tools/build/fetch_models.py
+      - name: Иконки
+        run: python tools/build/make_icons.py
+      - name: PyInstaller
+        env:
+          SMENA_NN: "1"
+        run: pyinstaller packaging/smena.spec --noconfirm --distpath build/dist --workpath build/work
+      - name: Самопроверка
+        run: ./build/dist/SMENA.app/Contents/MacOS/SMENA --selftest
+      - name: Пробный запуск окна (10 с)
+        continue-on-error: true      # на сборочной машине может не быть OpenGL
+        env:
+          SMENA_SMOKE: "10"
+        run: ./build/dist/SMENA.app/Contents/MacOS/SMENA; tail -n 20 ~/Library/Application\ Support/SMENA/logs/smena.log
+      - name: Упаковка .dmg
+        run: python tools/build/package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SMENA-macos
+          path: build/out/*.dmg
+      - name: Релиз
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/out/*.dmg

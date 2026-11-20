@@ -1,0 +1,47 @@
+{
+  "name": "SMENA 0.1.2 × ut2 (чёрный · жёлто-зелёный · экран «фоллаут»)",
+  "colors": {
+    "body": "#0c0b07",
+    "body_tex": "#14130b",
+    "body_edge": "#2c2a15",
+    "metal": "#dfe84a",
+    "metal_shadow": "#5b5a28",
+    "engrave": "#efeedd",
+    "engrave_red": "#d5e22b",
+    "screen_bg": "#04130a",
+    "screen_fg": "#3dff7a",
+    "screen_dim": "#1e8a44",
+    "screen_warn": "#ffcf3d",
+    "viewfinder": "#000000",
+    "accent": "#d5e22b",
+    "accent2": "#f1d81f",
+    "olive": "#3e3c1c",
+    "rec": "#e3412b",
+    "knob_hi": "#3a381c",
+    "knob_lo": "#0c0b06",
+    "rust": "#7d4320",
+    "hazard": "#e2c21e",
+    "hazard_dark": "#a8870f"
+  },
+  "fonts": {
+    "screen": "PT Mono",
+    "digits": "VT323",
+    "engrave": "PT Sans Narrow"
+  },
+  "font_files": [
+    "fonts/PTMono-Regular.ttf",
+    "fonts/VT323-Regular.ttf",
+    "fonts/PT_Sans-Narrow-Web-Regular.ttf",
+    "fonts/PT_Sans-Narrow-Web-Bold.ttf"
+  ],
+  "textures": {
+    "body": "textures/plastic.png",
+    "logo": "textures/ut2.webp",
+    "tin": "textures/tin.png",
+    "eye": "textures/eye.png"
+  },
+  "effects": {
+    "scanlines": 0.22,
+    "glow": 0.5
+  }
+}

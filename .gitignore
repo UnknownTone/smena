@@ -1,0 +1,13 @@
+# окружения и сборка
+.venv*/
+__pycache__/
+*.pyc
+/build/
+/dist/
+# тяжёлые данные (лежат только у автора)
+cache/
+models/
+demo/
+*.mp4
+# локальные настройки прототипа
+app/settings.json
