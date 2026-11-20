@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+env:
+  PYTHONUTF8: "1"              # вывод скриптов — по-русски (консоль Windows по умолчанию cp1252)
+  PYTHONIOENCODING: utf-8
+
 jobs:
   windows:
     runs-on: windows-latest
