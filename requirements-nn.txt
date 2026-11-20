@@ -1,9 +1,9 @@
 # Нейросети внутри сборки (macOS, Apple Silicon): SAM 2 + LaMa на обычном PyTorch (Metal / процессор).
 # Ставится поверх requirements-smena.txt и requirements-build.txt; numpy и Pillow — как в .venv-prep
-# (simple-lama-inpainting требует numpy < 2, Pillow < 10; программа с ними тоже работает).
+# (simple-lama-inpainting просит numpy < 2, Pillow < 10 — ставится с --no-deps; Pillow 10.4 — есть сборки под Python 3.12).
 # SAM 2 — из репозитория (без CUDA-расширения):  SAM2_BUILD_CUDA=0 pip install --no-build-isolation <строка ниже>
 numpy==1.26.4
-Pillow==9.5.0
+Pillow==10.4.0
 torch==2.14.1
 torchvision==0.29.1
 hydra-core==1.3.7
