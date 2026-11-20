@@ -14,11 +14,12 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-*.txt
       - name: Зависимости
         run: |
           python -m pip install --upgrade pip
@@ -45,13 +46,14 @@ jobs:
           files: build/out/*.exe
 
   macos:
-    runs-on: macos-14          # Apple Silicon (arm64)
+    runs-on: macos-15          # Apple Silicon (arm64)
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-*.txt
       - name: Зависимости (программа + нейросети)
         env:
           SAM2_BUILD_CUDA: "0"
